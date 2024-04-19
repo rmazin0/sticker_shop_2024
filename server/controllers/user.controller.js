@@ -45,7 +45,9 @@ export const logout = async (req, res) => {
 //get logged in user by id
 export const getLoggedUser = async (req, res) => {
     try {
-        const loggedUser = await User.findById(req.params.id)
+        const decodedJwt = jwt.decode(req.cookies.userToken, {complete:true})
+        const userId = decodedJwt.payload.userId
+        const loggedUser = await User.findById(userId)
         return res.status(200).json(loggedUser)
     } catch (err) {
         return res.status(500).json(err)
