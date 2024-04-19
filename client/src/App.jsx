@@ -8,6 +8,7 @@ function App() {
 
   return (
     <>
+    {/* ADD LOGIN VALIDATION NEXT */}
       <Routes>
         <Route index element={<LoginAndReg/>}/>
         <Route path='/home' element={<Home/>}/>

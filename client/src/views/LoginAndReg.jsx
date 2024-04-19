@@ -3,8 +3,8 @@ import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 import { userContext } from "../context/userContext";
 
-const Login = (props) => {
-    const {user, setUser} = useContext(userContext) //user context gives access to user state
+const LoginAndReg = (props) => {
+    const {user, setUser, setIdInLocal} = useContext(userContext) //user context gives access to user state, setting id in local storage function
     const navigate = useNavigate()
     const [login, setLogin] = useState({
         username: '',
@@ -23,6 +23,8 @@ const Login = (props) => {
             .then((res) => {
                 console.log(res.data);
                 setUser(res.data)
+                setIdInLocal(res.data._id) //setting id in local storage
+                console.log(res.data._id);
                 navigate('/home')
             })
             .catch((err) => {
@@ -35,6 +37,8 @@ const Login = (props) => {
         axios.post('http://localhost:8000/api/register', register, { withCredentials: true })
             .then((res) => {
                 console.log(res.data);
+                setUser(res.data)
+                setIdInLocal(res.data._id) //setting id in local storage
                 navigate('/home')
             })
             .catch((err) => {
@@ -124,4 +128,4 @@ const Login = (props) => {
     )
 }
 
-export default Login;
+export default LoginAndReg;
