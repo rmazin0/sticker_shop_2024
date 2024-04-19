@@ -18,7 +18,6 @@ const Home = (props) => {
     return (
         <div>
             <h2>Home</h2>
-            <p>test</p>
             <button onClick={logout}>Logout</button>
         </div>
 )}
