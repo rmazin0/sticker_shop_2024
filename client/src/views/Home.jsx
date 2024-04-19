@@ -1,8 +1,10 @@
-import {useState} from 'react'
+import {useContext} from 'react'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { userContext } from '../context/userContext';
 
 const Home = (props) => {
+    const {user, setUser} = useContext(userContext)
     const navigate = useNavigate();
 
     const logout = () => {
@@ -17,7 +19,7 @@ const Home = (props) => {
 
     return (
         <div>
-            <h2>Home</h2>
+            <h2>Hello {user.username}</h2>
             <button onClick={logout}>Logout</button>
         </div>
 )}
