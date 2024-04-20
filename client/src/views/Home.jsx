@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { userContext } from '../context/userContext';
 
 const Home = (props) => {
-    const id = window.localStorage.getItem('uuid') //passes user id that is stored in localStorage of website
+    // const id = window.localStorage.getItem('uuid') //passes user id that is stored in localStorage of website
     const {user, setUser} = useContext(userContext)
     const navigate = useNavigate();
 

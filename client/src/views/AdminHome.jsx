@@ -1,9 +1,24 @@
-import {useState} from 'react'
+import {useState, useEffect, useContext} from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+import { userContext } from '../context/userContext';
 
 const AdminHome = (props) => {
     const navigate = useNavigate();
+    const {user, setUser} = useContext(userContext)
+
+
+    useEffect(() => {
+        axios.get('http://localhost:8000/api/user', {withCredentials:true})
+            .then((res) => {
+                // console.log(res);
+                setUser(res.data)
+            })
+            .catch((err) => {
+                navigate('/unauthorized')
+                console.log(err);
+            })
+    }, [])
 
     const logout = () => {
         axios.post('http://localhost:8000/api/logout', {}, {withCredentials:true})
@@ -17,7 +32,7 @@ const AdminHome = (props) => {
     }
     return (
         <div>
-            <h1>Hello Admin!</h1>
+            <h1>Hello Admin {user.username}!</h1>
             <button onClick={logout}>logout</button>
         </div>
 )}
