@@ -1,7 +1,7 @@
 import {useState, useContext} from 'react'
 import { userContext } from '../context/userContext';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 const Nav = (props) => {
     const navigate = useNavigate()
@@ -23,6 +23,10 @@ const Nav = (props) => {
             <header>
                 <h1>Store Name</h1>
                 <button onClick={logout}>Logout</button>
+                {
+                    user.isAdmin&&
+                    <Link to={'/product/create'}>Add a product</Link>
+                }
             </header>
         </div>
 )}

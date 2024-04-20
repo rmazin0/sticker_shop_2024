@@ -3,19 +3,21 @@ import {Routes, Route} from 'react-router-dom';
 import LoginAndReg from './views/LoginAndReg';
 import Home from './views/Home';
 import Unauthorized from './views/Unauthorized';
-import AdminHome from './views/AdminHome';
+import CreateProduct from './views/CreateProduct';
+import ProductDetails from './views/ProductDetails';
 
 
 function App() {
 
   return (
     <>
-    {/* ADD LOGIN VALIDATION NEXT */}
+    {/* ADD VALIDATIONS */}
       <Routes>
         <Route index element={<LoginAndReg/>}/>
         <Route path='/home' element={<Home/>}/>
+        <Route path='/product/create' element={<CreateProduct/>}/>
+        <Route path='/product/:id' element={<ProductDetails/>}/>
         <Route path='/unauthorized' element={<Unauthorized/>}/>
-        <Route path='/admin/home' element={<AdminHome/>}/>
       </Routes>
     </>
   )
