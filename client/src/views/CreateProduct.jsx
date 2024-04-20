@@ -1,8 +1,10 @@
-import { useState } from 'react'
+import { useState, useContext, useEffect } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+import { userContext } from '../context/userContext'
 
 const CreateProduct = (props) => {
+    const {user} = useContext(userContext);
     const navigate = useNavigate();
     const [product, setProduct] = useState({
         imgUrl: '',
@@ -10,6 +12,18 @@ const CreateProduct = (props) => {
         productPrice: undefined,
         productStock: undefined,
     })
+
+    useEffect(() => {
+        axios.get('http://localhost:8000/api/user', {withCredentials:true})
+            .then((res) => {
+                // console.log(res);
+                setUser(res.data)
+            })
+            .catch((err) => {
+                navigate('/unauthorized')
+                console.log(err);
+            })
+    }, [])
 
     const changeHandler = (e) => {
         if (e.target.name === 'imgUrl') {
