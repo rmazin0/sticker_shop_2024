@@ -20,6 +20,10 @@ const UserSchema = new Schema({
         type:String,
         required: [true, 'Password is required!'],
         minLength: [8, 'Password must be at least 8 characters']
+    },
+    isAdmin : {
+        type:Boolean,
+        default:false
     }
 }, {timestamps: true})
 UserSchema.plugin(mongooseModelValidator);

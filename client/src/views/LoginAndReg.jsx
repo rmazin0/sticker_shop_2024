@@ -1,10 +1,10 @@
 import { useState, useContext } from "react";
 import axios from 'axios';
-import { useNavigate } from "react-router-dom";
+import { redirect, useNavigate } from "react-router-dom";
 import { userContext } from "../context/userContext";
 
 const LoginAndReg = (props) => {
-    const {user, setUser, setIdInLocal} = useContext(userContext) //user context gives access to user state, setting id in local storage function
+    const { user, setUser, setIdInLocal } = useContext(userContext) //user context gives access to user state, setting id in local storage function
     const navigate = useNavigate()
     const [login, setLogin] = useState({
         username: '',
@@ -15,16 +15,19 @@ const LoginAndReg = (props) => {
         email: '',
         password: '',
         confirmPassword: '',
+        isAdmin: false,
     })
+    const [adminPass, setAdminPass] = useState('')
+    const secretPass = 'zxcasdqwe'
 
     const loginHandler = (e) => {
         e.preventDefault();
         axios.post('http://localhost:8000/api/login', login, { withCredentials: true })
             .then((res) => {
-                console.log(res.data);
+                // console.log(res.data);
                 setUser(res.data)
                 setIdInLocal(res.data._id) //setting id in local storage
-                console.log(res.data._id);
+                // console.log(res.data._id);
                 navigate('/home')
             })
             .catch((err) => {
@@ -34,16 +37,21 @@ const LoginAndReg = (props) => {
 
     const registerHandler = (e) => {
         e.preventDefault();
-        axios.post('http://localhost:8000/api/register', register, { withCredentials: true })
-            .then((res) => {
-                console.log(res.data);
-                setUser(res.data)
-                setIdInLocal(res.data._id) //setting id in local storage
-                navigate('/home')
-            })
-            .catch((err) => {
-                console.log(err);
-            })
+        //checks if user is trying to register as admin and if admin pass id correct
+        if (register.isAdmin && adminPass !== secretPass) {
+            navigate('/unauthorized')
+        } else {
+            axios.post('http://localhost:8000/api/register', register, { withCredentials: true })
+                .then((res) => {
+                    console.log(res.data);
+                    setUser(res.data)
+                    setIdInLocal(res.data._id) //setting id in local storage
+                    navigate('/home')
+                })
+                .catch((err) => {
+                    console.log(err);
+                })
+        }
     }
 
     const loginChangeHandler = (e) => {
@@ -87,6 +95,23 @@ const LoginAndReg = (props) => {
             <h2>Register</h2>
             <form onSubmit={registerHandler}>
                 <div>
+                    <label htmlFor="isAdmin">User</label>
+                    <input
+                        type="radio"
+                        name="isAdmin"
+                        onChange={(e) => regChangeHandler(e)}
+                        value={false}
+                        defaultChecked={!register.isAdmin}
+                    />
+                    <label htmlFor="isAdmin">Admin</label>
+                    <input
+                        type="radio"
+                        name="isAdmin"
+                        onChange={(e) => regChangeHandler(e)}
+                        value={true}
+                    />
+                </div>
+                <div>
                     <label htmlFor="username">Username:</label>
                     <input
                         type="text"
@@ -122,6 +147,17 @@ const LoginAndReg = (props) => {
                         value={register.confirmPassword}
                     />
                 </div>
+                {
+                    register.isAdmin === 'true' &&
+                    <div>
+                        <label htmlFor="adminPass">Admin Pass:</label>
+                        <input
+                            type="password"
+                            name="adminPass"
+                            onChange={(e) => setAdminPass(e.target.value)}
+                        />
+                    </div>
+                }
                 <input type="submit" value={"Register"} />
             </form>
         </>

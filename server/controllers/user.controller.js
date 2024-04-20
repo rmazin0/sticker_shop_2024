@@ -6,7 +6,7 @@ export const register = async (req, res) => {
     try {
         const newUser = await User.create(req.body)
         const userToken = jwt.sign(
-            {userId:newUser._id, username:newUser.username},
+            {userId:newUser._id, username:newUser.username, isAdmin:newUser.isAdmin},
             process.env.SECRET_KEY
             )
         res.cookie('userToken', userToken)
@@ -30,7 +30,7 @@ export const login = async (req, res) => {
     }
     // after password checks, create a userToken for the user
     const userToken = jwt.sign(
-        {userId:potentialUser._id, username:potentialUser.username},
+        {userId:potentialUser._id, username:potentialUser.username, isAdmin:potentialUser.isAdmin},
         process.env.SECRET_KEY
         )
     res.cookie('userToken', userToken)

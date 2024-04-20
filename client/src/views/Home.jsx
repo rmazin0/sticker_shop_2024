@@ -21,11 +21,14 @@ const Home = (props) => {
 
     //getting a user from db with id from local storage
     useEffect(() => {
-        console.log(id);
         axios.get('http://localhost:8000/api/user', {withCredentials:true})
             .then((res) => {
-                console.log(res);
+                // console.log(res);
                 setUser(res.data)
+                //if condition checks, redirect to admin page
+                if (user.isAdmin) {
+                    navigate('/admin/home')
+                }
             })
             .catch((err) => {
                 navigate('/unauthorized')

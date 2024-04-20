@@ -6,6 +6,7 @@ export default function authenticate (req, res, next) {
         if (err) {
             res.status(401).json({verified:false})
         } else {
+            console.log(payload);
             next()
         }
     })
