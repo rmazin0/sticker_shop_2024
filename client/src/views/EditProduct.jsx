@@ -1,17 +1,25 @@
 import { useState, useContext, useEffect } from 'react'
 import axios from 'axios'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { userContext } from '../context/userContext'
 
-const CreateProduct = (props) => {
+const EditProduct= (props) => {
+    const {id} = useParams()
     const {user, setUser} = useContext(userContext);
     const navigate = useNavigate();
     const [product, setProduct] = useState({
-        img: '',
+        img: {
+            imgUrl:'',
+            public_id: '',
+        },
         productName: '',
         productPrice: '',
         productStock: '',
     })
+    const [preview, setPreview] = useState({
+        imgUrl: '',
+        public_id: '',
+    });
 
     useEffect(() => {
         axios.get('http://localhost:8000/api/user', {withCredentials:true})
@@ -25,12 +33,33 @@ const CreateProduct = (props) => {
             })
     }, [])
 
+    useEffect(() => {
+        axios.get(`http://localhost:8000/api/products/${id}`)
+            .then((res) => {
+                setProduct(res.data)
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+    },[])
+
+
     const changeHandler = (e) => {
         if (e.target.name === 'img') {
+            const formData = new FormData()
+            formData.append('img', e.target.files[0])
+            axios.post('http://localhost:8000/api/preview', formData)
+                .then((res) => {
+                    setPreview(res.data)
+                })
+                .catch((err) => {
+                    console.log(err);
+                })
             setProduct({
                 ...product,
                 img: e.target.files[0]
             })
+            console.log(preview.imgUrl);
         } else {
             setProduct({
                 ...product,
@@ -46,7 +75,10 @@ const CreateProduct = (props) => {
         formData.append('productPrice', product.productPrice);
         formData.append('productStock', product.productStock);
         formData.append('img', product.img);
-        axios.post('http://localhost:8000/api/products', formData)
+        if (preview) {
+            formData.append('preview', preview.public_id)
+        }
+        axios.post(`http://localhost:8000/api/products/${id}`, formData)
             .then(res => {
                 navigate('/home');
                 console.log(res);
@@ -58,7 +90,12 @@ const CreateProduct = (props) => {
 
     return (
         <>
-            <h2>Add a Product</h2>
+            <h2>Edit Product</h2>
+            {
+                preview.imgUrl?
+                <img style={{width:'200px'}} src={preview.imgUrl} alt={product.productName}/>:
+                <img style={{width:'200px'}} src={product.img.imgUrl} alt={product.productName}/>
+            }
             <form encType='multipart/form-data' onSubmit={submitHandler}>
                 <div>
                     <label htmlFor="productName">Product Name</label>
@@ -95,10 +132,11 @@ const CreateProduct = (props) => {
                         onChange={(e) => changeHandler(e)}
                     />
                 </div>
-                <input type="submit" value="submit" />
+                <input type="submit" value="update" />
             </form>
         </>
     )
 }
 
-export default CreateProduct;
+export default EditProduct
+;

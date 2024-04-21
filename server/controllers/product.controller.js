@@ -30,11 +30,15 @@ export const createProduct = async (req, res) => {
         const result = await uploadToCloud(req.file);
         console.log(result);
         const product = {
-            imgUrl: result.url,
+            img: {
+                imgUrl: result.url,
+                public_id: result.public_id
+            },
             productName: req.body.productName,
             productPrice: req.body.productPrice,
             productStock: req.body.productStock,
         }
+
         const newProduct = await Product.create(product)
         return res.status(201).json(newProduct);
     } catch (err) {
@@ -66,8 +70,23 @@ export const getOneProduct = async (req, res) => {
 //update one
 export const updateOneProduct = async (req, res) => {
     try {
+        const oneProduct = await Product.findById(req.params.id)
+        if (oneProduct.imgUrl !== ''){
+            const img = oneProduct.img.public_id
+            await cloudinary.v2.uploader.destroy(img)
+            console.log('deleted!!!!!!!!!!!!!!!!!!')
+        }
+        if (req.body.preview) {
+            await cloudinary.v2.uploader.destroy(req.body.preview)
+            console.log('preview deleted!!!!!!');
+        }
+        console.log(req.body);
+        const result = await uploadToCloud(req.file);
         const product = {
-            imgUrl: result.url,
+            img: {
+                imgUrl: result.url,
+                public_id: result.public_id
+            },
             productName: req.body.productName,
             productPrice: req.body.productPrice,
             productStock: req.body.productStock,
@@ -89,4 +108,17 @@ export const deleteOneProduct = async (req, res) => {
     }
 }
 
+//for preview
+export const previewImage = async (req,res) => {
+    try {
+        const result = await uploadToCloud(req.file);
+        const img = {
+            imgUrl: result.url,
+            public_id: result.public_id
+        }
+        return res.status(201).json(img)
+    } catch (err) {
+        
+    }
+}
 

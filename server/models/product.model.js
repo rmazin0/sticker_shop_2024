@@ -1,9 +1,15 @@
 import {Schema, model} from 'mongoose'
 
 const ProductSchema = new Schema({
-    imgUrl: {
-        type: String,
-        required: true
+    img: {
+        imgUrl:{
+            type:String,
+            required:true,
+        },
+        public_id:{
+            type: String,
+            requried:true,
+        }
     },
     productName: {
         type: String,

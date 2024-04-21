@@ -22,10 +22,10 @@ const ProductsDisplay = (props) => {
                 {
                     products.map((product) => (
                         <div key={product._id}>
-                            <img src={product.imgUrl} alt={product.productName} />
-                            <Link to={`/product/${product._id}`}><h3>{product.productName}</h3></Link>
-                            <p>Price: {product.productPrice}</p>
-                            <p>Stock: {product.productStock}</p>
+                            <img style={{width:'200px'}} src={product.img.imgUrl} alt={product.productName} />
+                            <Link to={`/product/${product._id}/details`}><h3>{product.productName}</h3></Link>
+                            <p>Price: ${product.productPrice}</p>
+                            <p>Stock: {product.productStock} left</p>
                         </div>
                     ))
                 }
