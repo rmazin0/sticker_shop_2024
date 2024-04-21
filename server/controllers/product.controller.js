@@ -14,7 +14,7 @@ const uploadToCloud = (file) => {
         let cld_upload_stream = cloudinary.v2.uploader.upload_stream({folder: 'danie_products', product_id:file.originalname}, (error, result) => {
             if (result) {
                 resolve(result);
-                console.log(result);
+                // console.log(result);
             } else {
                 reject(error);
                 console.log(error);
@@ -80,7 +80,6 @@ export const updateOneProduct = async (req, res) => {
             await cloudinary.v2.uploader.destroy(req.body.preview)
             console.log('preview deleted!!!!!!');
         }
-        console.log(req.body);
         const result = await uploadToCloud(req.file);
         const product = {
             img: {

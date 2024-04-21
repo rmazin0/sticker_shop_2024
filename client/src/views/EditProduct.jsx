@@ -59,7 +59,6 @@ const EditProduct= (props) => {
                 ...product,
                 img: e.target.files[0]
             })
-            console.log(preview.imgUrl);
         } else {
             setProduct({
                 ...product,
