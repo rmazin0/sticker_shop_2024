@@ -1,8 +1,12 @@
-import {useState, useEffect} from 'react'
+import {useState, useEffect, useContext} from 'react'
 import axios from 'axios'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { userContext } from '../context/userContext'
+
 
 const ProductsDisplay = (props) => {
+    const navigate = useNavigate()
+    const {user, setUser} = useContext(userContext);
     const [products, setProducts] = useState([])
 
     useEffect(() => {
@@ -18,15 +22,20 @@ const ProductsDisplay = (props) => {
     return (
         <>
             <h2>Products</h2>
-            <div>
+            <div className='w-full flex justify-evenly'>
                 {
                     products.map((product) => (
-                        <div key={product._id}>
-                            <img style={{width:'200px'}} src={product.img.imgUrl} alt={product.productName} />
+                        <div key={product._id} className='border border-black flex flex-col justify-evenly items-center w-56'>
+                            <img style={{width:'200px'}} loading='lazy' src={product.img.imgUrl} alt={product.productName} />
                             <Link to={`/product/${product._id}/details`}><h3>{product.productName}</h3></Link>
                             <p>Price: ${product.productPrice}</p>
                             <p>Stock: {product.productStock} left</p>
+                            {
+                                !user.isAdmin&&
+                                <Link to={`/checkout`}><button className='button'>buy</button></Link>
+                            }
                         </div>
+                        
                     ))
                 }
             </div>

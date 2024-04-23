@@ -26,6 +26,9 @@ const EditProduct= (props) => {
             .then((res) => {
                 // console.log(res);
                 setUser(res.data)
+                if (!user.isAdmin) {
+                    navigate('/unauthorized')
+                }
             })
             .catch((err) => {
                 navigate('/unauthorized')
@@ -92,8 +95,8 @@ const EditProduct= (props) => {
             <h2>Edit Product</h2>
             {
                 preview.imgUrl?
-                <img style={{width:'200px'}} src={preview.imgUrl} alt={product.productName}/>:
-                <img style={{width:'200px'}} src={product.img.imgUrl} alt={product.productName}/>
+                <img style={{width:'200px'}} loading='lazy' src={preview.imgUrl} alt={product.productName}/>:
+                <img style={{width:'200px'}} loading='lazy' src={product.img.imgUrl} alt={product.productName}/>
             }
             <form encType='multipart/form-data' onSubmit={submitHandler}>
                 <div>

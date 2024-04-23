@@ -41,6 +41,17 @@ const ProductDetails = (props) => {
             })
     }, [])
 
+
+    const deleteHandler = () => {
+        axios.delete(`http://localhost:8000/api/products/${id}`)
+            .then((res) => {
+                navigate('/home')
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+
+    }
     return (
         <>
             <Nav />
@@ -49,11 +60,12 @@ const ProductDetails = (props) => {
             <p>Price: {product.productPrice}</p>
             <p>Stock: {product.productStock}</p>
             {
-                user.isAdmin&&
+                user.isAdmin?
                 <div>
                     <Link to={`/product/${product._id}/edit`}><button>edit</button></Link>
-                    <button>delete</button>
-                </div>
+                    <button onClick={deleteHandler}>delete</button>
+                </div>:
+                <Link to={`/checkout`}><button>buy</button></Link>
             }
         </>
     )

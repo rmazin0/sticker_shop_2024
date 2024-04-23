@@ -12,16 +12,18 @@ const Home = (props) => {
 
     //getting a user from db with id from local storage
     useEffect(() => {
-        axios.get('http://localhost:8000/api/user', {withCredentials:true})
-            .then((res) => {
-                // console.log(res);
-                setUser(res.data)
-            })
-            .catch((err) => {
-                navigate('/unauthorized')
-                console.log(err);
-            })
-    }, [])
+        if (window.localStorage.getItem('uuid')) {
+            axios.get('http://localhost:8000/api/user', {withCredentials:true})
+                .then((res) => {
+                    // console.log(res);
+                    setUser(res.data)
+                })
+                .catch((err) => {
+                    navigate('/unauthorized')
+                    console.log(err);
+                })
+            }
+        }, [])
     return (
         <div>
             <Nav/>

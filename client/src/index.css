@@ -1,14 +1,22 @@
-:root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@layer components {
+  .button--nav {
+    @apply p-2 rounded-full border border-gray-400
+  }
+
+  .container {
+    @apply rounded-xl bg-white flex items-center justify-center
+  }
+  
+  .input {
+    @apply border border-stone-500 rounded px-2 py-1
+  }
+
+  .main {
+    @apply flex flex-col bg-stone-50 h-screen py-40
+  }
 }

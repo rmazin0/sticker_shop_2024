@@ -28,7 +28,7 @@ const uploadToCloud = (file) => {
 export const createProduct = async (req, res) => {
     try {
         const result = await uploadToCloud(req.file);
-        console.log(result);
+        // console.log(result);
         const product = {
             img: {
                 imgUrl: result.url,
@@ -69,14 +69,17 @@ export const getOneProduct = async (req, res) => {
 
 //update one
 export const updateOneProduct = async (req, res) => {
+    // ADD CONDITION TO SAVE USING FILE OR USING STATE
     try {
-        const oneProduct = await Product.findById(req.params.id)
-        if (oneProduct.imgUrl !== ''){
-            const img = oneProduct.img.public_id
-            await cloudinary.v2.uploader.destroy(img)
-            console.log('deleted!!!!!!!!!!!!!!!!!!')
-        }
+        const oneProduct = await Product.findById(req.params.id) // GETS ONE PRODUCT BY ID...USED TO FETCH IMAGE PUBLIC_ID
+        //DESTROYS PREVIEW PICTURE IN CLOUD AFTER SAVING
         if (req.body.preview) {
+            //DESTROYS OLD PICTURE, NEEDS TO BE MODIFIED SO IT DOESNT AUTOMATICALLY DELETES WHEN NOT REPLACED WITH A PREVIEW....PUT IN ```IF (PREVIEW EXISTS)``` CONDITION???
+            if (oneProduct.imgUrl !== ''){
+                const img = oneProduct.img.public_id
+                await cloudinary.v2.uploader.destroy(img)
+                console.log('deleted!!!!!!!!!!!!!!!!!!')
+            }
             await cloudinary.v2.uploader.destroy(req.body.preview)
             console.log('preview deleted!!!!!!');
         }
@@ -100,6 +103,13 @@ export const updateOneProduct = async (req, res) => {
 //delete one
 export const deleteOneProduct = async (req, res) => {
     try {
+        const oneProduct = await Product.findById(req.params.id);
+        console.log(oneProduct);
+        if (oneProduct.imgUrl !== ''){
+            const img = oneProduct.img.public_id
+            await cloudinary.v2.uploader.destroy(img)
+            console.log('deleted!!!!!!!!!!!!!!!!!!')
+        }
         await Product.deleteOne({_id:req.params.id})
         return res.status(201).json({message: 'delete successful'});
     } catch (err) {
