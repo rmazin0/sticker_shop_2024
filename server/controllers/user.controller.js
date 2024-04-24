@@ -4,6 +4,7 @@ import bcrypt from 'bcrypt';
 
 export const register = async (req, res) => {
     try {
+        console.log('---------------------BODY--------------------',req.body);
         const newUser = await User.create(req.body)
         const userToken = jwt.sign(
             {userId:newUser._id, username:newUser.username, isAdmin:newUser.isAdmin},
@@ -19,24 +20,24 @@ export const register = async (req, res) => {
 }
 
 export const login = async (req, res) => {
-    const {username, password} = req.body // deconstruct username and pass from req.body
-    const potentialUser = await User.findOne({username:username}) // finds potential user by their username
-    if (!potentialUser) {
-        return res.status(404).json({message:'user not found'});
-    }
-    //if we pass the first condition, compares the password of given username
-    const potentialPass = await bcrypt.compare(password, potentialUser.password)
-    if (!potentialPass){
-        return res.status(400).json({message:'Invalid Credentials'});
-    }
-    // after password checks, create a userToken for the user
-    const userToken = jwt.sign(
-        {userId:potentialUser._id, username:potentialUser.username, isAdmin:potentialUser.isAdmin},
-        process.env.SECRET_KEY,
-        {expiresIn:'2h'}
-        )
-    res.cookie('userToken', userToken, {httpOnly:true, maxAge: 2*60*60*1000})
-    return res.status(201).json(potentialUser)
+        const {username, password} = req.body // deconstruct username and pass from req.body
+        const potentialUser = await User.findOne({username:username}) // finds potential user by their username
+        if (!potentialUser) {
+            return res.status(404).json({message:'Invalid Credentials'});
+        }
+        //if we pass the first condition, compares the password of given username
+        const potentialPass = await bcrypt.compare(password, potentialUser.password)
+        if (!potentialPass){
+            return res.status(400).json({message:'Invalid Credentials'});
+        }
+        // after password checks, create a userToken for the user
+        const userToken = jwt.sign(
+            {userId:potentialUser._id, username:potentialUser.username, isAdmin:potentialUser.isAdmin},
+            process.env.SECRET_KEY,
+            {expiresIn:'2h'}
+            )
+        res.cookie('userToken', userToken, {httpOnly:true, maxAge: 2*60*60*1000})
+        return res.status(201).json(potentialUser)
 }
 
 export const logout = async (req, res) => {

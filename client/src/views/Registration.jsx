@@ -16,14 +16,15 @@ const Registration = (props) => {
         isAdmin: false,
     })
     const [adminPass, setAdminPass] = useState('')
-    const secretPass = 'zxcasdqwe'
+    const secretPass = 'zxcasdqwe' // ! put secret to backend
+    const [errors, setErrors] = useState([])
 
 
     const registerHandler = (e) => {
         e.preventDefault();
         //checks if user is trying to register as admin and if admin pass id correct
         if (register.isAdmin && adminPass !== secretPass) {
-            navigate('/unauthorized')
+            console.log('error');
         } else {
             axios.post('http://localhost:8000/api/register', register, { withCredentials: true })
                 .then((res) => {
@@ -34,6 +35,7 @@ const Registration = (props) => {
                 })
                 .catch((err) => {
                     console.log(err);
+                    setErrors(err.response.data.errors);
                 })
         }
     }
@@ -80,6 +82,10 @@ const Registration = (props) => {
                                 onChange={(e) => regChangeHandler(e)}
                                 value={register.username}
                             />
+                            {
+                                errors.username&&
+                                <p>{errors.username.message}</p>
+                            }
                         </div>
                         <div className="flex flex-col justify-start">
                             <label htmlFor="email">Email</label>
@@ -89,6 +95,10 @@ const Registration = (props) => {
                                 onChange={(e) => regChangeHandler(e)}
                                 value={register.email}
                             />
+                            {
+                                errors.email&&
+                                <p>{errors.email.message}</p>
+                            }
                         </div>
                         <div className="flex flex-col justify-start">
                             <label htmlFor="password">Password</label>
@@ -98,6 +108,10 @@ const Registration = (props) => {
                                 onChange={(e) => regChangeHandler(e)}
                                 value={register.password}
                             />
+                            {
+                                errors.password&&
+                                <p>{errors.password.message}</p>
+                            }
                         </div>
                         <div className="flex flex-col justify-start">
                             <label htmlFor="confirmPassword">Confirm Password</label>
@@ -107,6 +121,10 @@ const Registration = (props) => {
                                 onChange={(e) => regChangeHandler(e)}
                                 value={register.confirmPassword}
                             />
+                            {
+                                errors.confirmPassword&&
+                                <p>{errors.confirmPassword.message}</p>
+                            }
                         </div>
                         {
                             register.isAdmin === 'true' &&

@@ -11,6 +11,7 @@ const Login = (props) => {
         username: '',
         password: ''
     })
+    const [error, setError] = useState([])
 
     const loginHandler = (e) => {
         e.preventDefault();
@@ -24,6 +25,8 @@ const Login = (props) => {
             })
             .catch((err) => {
                 console.log(err);
+                console.log(err.response.data.message);
+                setError(err.response.data.message);
             })
     }
 
@@ -40,9 +43,14 @@ const Login = (props) => {
             <div className="main">
                 <div className="container flex-col p-5 mx-auto">
                     <h2>Login</h2>
+                    {
+                        error&&
+                        <p>{error}</p>
+                    }
                     <form onSubmit={loginHandler} className="w-4/5">
                         <div className="flex flex-col justify-start">
                             <label htmlFor="username">Username</label>
+                            
                             <input className="input"
                                 type="text"
                                 name="username"
@@ -50,6 +58,7 @@ const Login = (props) => {
                                 onChange={(e) => loginChangeHandler(e)}
                                 value={login.username}
                             />
+
                         </div>
                         <div className="flex flex-col justify-start">
                             <label htmlFor="password">Password</label>
