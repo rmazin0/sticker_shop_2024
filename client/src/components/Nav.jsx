@@ -35,7 +35,7 @@ const Nav = (props) => {
                     window.localStorage.getItem('uuid')?
                         <button className='button--nav' onClick={logout}>Sign out</button> :
                         <div>
-                            <Link to={'/login'}><button>Sign in</button></Link>
+                            <Link className='mr-4' to={'/login'}><button>Sign in</button></Link>
                             <Link to={'/register'}><button className='button--nav'>Sign up</button></Link>
                         </div>
                 }

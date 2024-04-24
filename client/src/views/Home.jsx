@@ -28,9 +28,11 @@ const Home = (props) => {
         <div>
             <Nav/>
             {
-                user.isAdmin?
+                user.isAdmin&&window.localStorage.getItem('uuid')? //checks if a user is admin & in local
                 <h2>Hello Admin {user.username}</h2>:
-                <h2>Hello {user.username}</h2>
+                !user.isAdmin&&window.localStorage.getItem('uuid')?//checks if a user is not admin & in local
+                <h2>Hello {user.username}</h2>:
+                <h2>Hello!</h2>
             }
             <ProductsDisplay/>
         </div>

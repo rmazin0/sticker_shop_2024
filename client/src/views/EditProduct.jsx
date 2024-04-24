@@ -26,7 +26,7 @@ const EditProduct= (props) => {
             .then((res) => {
                 // console.log(res);
                 setUser(res.data)
-                if (!user.isAdmin) {
+                if (!res.data.isAdmin) {
                     navigate('/unauthorized')
                 }
             })

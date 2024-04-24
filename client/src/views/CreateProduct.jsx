@@ -15,18 +15,18 @@ const CreateProduct = (props) => {
     })
 
     useEffect(() => {
-        axios.get('http://localhost:8000/api/user', { withCredentials: true })
-            .then((res) => {
-                // console.log(res);
-                setUser(res.data)
-                if (!user.isAdmin) {
+            axios.get('http://localhost:8000/api/user', { withCredentials: true })
+                .then((res) => {
+                    // console.log(res);
+                    setUser(res.data)
+                    if (!res.data.isAdmin) {
+                        navigate('/unauthorized')
+                    }
+                })
+                .catch((err) => {
                     navigate('/unauthorized')
-                }
-            })
-            .catch((err) => {
-                navigate('/unauthorized')
-                console.log(err);
-            })
+                    console.log(err);
+                })
     }, [])
 
     const changeHandler = (e) => {
@@ -65,6 +65,11 @@ const CreateProduct = (props) => {
             <Nav />
             <div className="main">
                 <div>
+                    {
+                        user.isAdmin ?
+                            <h2>Hello Admin {user.username}</h2> :
+                            <h2>Hello {user.username}</h2>
+                    }
                     <h2>Add a Product</h2>
                     <form encType='multipart/form-data' onSubmit={submitHandler}>
                         <div>

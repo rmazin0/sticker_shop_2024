@@ -7,9 +7,10 @@ export const register = async (req, res) => {
         const newUser = await User.create(req.body)
         const userToken = jwt.sign(
             {userId:newUser._id, username:newUser.username, isAdmin:newUser.isAdmin},
-            process.env.SECRET_KEY
+            process.env.SECRET_KEY,
+            {expiresIn:'2h'}
             )
-        res.cookie('userToken', userToken)
+        res.cookie('userToken', userToken, {httpOnly:true, maxAge: 2*60*60*1000})
         return res.status(201).json(newUser)
     } catch (err) {
         console.log('ERROR', err);
@@ -31,9 +32,10 @@ export const login = async (req, res) => {
     // after password checks, create a userToken for the user
     const userToken = jwt.sign(
         {userId:potentialUser._id, username:potentialUser.username, isAdmin:potentialUser.isAdmin},
-        process.env.SECRET_KEY
+        process.env.SECRET_KEY,
+        {expiresIn:'2h'}
         )
-    res.cookie('userToken', userToken)
+    res.cookie('userToken', userToken, {httpOnly:true, maxAge: 2*60*60*1000})
     return res.status(201).json(potentialUser)
 }
 
@@ -48,6 +50,7 @@ export const getLoggedUser = async (req, res) => {
         const decodedJwt = jwt.decode(req.cookies.userToken, {complete:true})
         const userId = decodedJwt.payload.userId
         const loggedUser = await User.findById(userId)
+        // console.log(loggedUser);
         return res.status(200).json(loggedUser)
     } catch (err) {
         return res.status(500).json(err)
