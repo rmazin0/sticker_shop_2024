@@ -14,31 +14,32 @@ const Registration = (props) => {
         password: '',
         confirmPassword: '',
         isAdmin: false,
+        adminPass: '',
     })
-    const [adminPass, setAdminPass] = useState('')
-    const secretPass = 'zxcasdqwe' // ! put secret to backend
     const [errors, setErrors] = useState([])
+    const [secretError, setSecretError] = useState([])
 
 
     const registerHandler = (e) => {
         e.preventDefault();
-        //checks if user is trying to register as admin and if admin pass id correct
-        if (register.isAdmin && adminPass !== secretPass) {
-            console.log('error');
-        } else {
-            axios.post('http://localhost:8000/api/register', register, { withCredentials: true })
-                .then((res) => {
-                    console.log(res.data);
-                    setUser(res.data)
-                    setIdInLocal(res.data._id) //setting id in local storage
-                    navigate('/')
-                })
-                .catch((err) => {
-                    console.log(err);
+        axios.post('http://localhost:8000/api/register', register, { withCredentials: true })
+            .then((res) => {
+                console.log(res.data);
+                setUser(res.data)
+                setIdInLocal(res.data._id) //setting id in local storage
+                navigate('/')
+            })
+            .catch((err) => {
+                console.log(err);
+                if (err.response.data.errors) {
                     setErrors(err.response.data.errors);
-                })
-        }
+                }
+                if (err.response.data.keyError) {
+                    setSecretError(err.response.data.keyError);
+                }
+            })
     }
+
 
     const regChangeHandler = (e) => {
         setRegister((prevValue) => ({
@@ -83,8 +84,8 @@ const Registration = (props) => {
                                 value={register.username}
                             />
                             {
-                                errors.username&&
-                                <p>{errors.username.message}</p>
+                                errors.username ?
+                                    <p>{errors.username.message}</p> : null
                             }
                         </div>
                         <div className="flex flex-col justify-start">
@@ -96,8 +97,8 @@ const Registration = (props) => {
                                 value={register.email}
                             />
                             {
-                                errors.email&&
-                                <p>{errors.email.message}</p>
+                                errors.email ?
+                                    <p>{errors.email.message}</p> : null
                             }
                         </div>
                         <div className="flex flex-col justify-start">
@@ -109,8 +110,8 @@ const Registration = (props) => {
                                 value={register.password}
                             />
                             {
-                                errors.password&&
-                                <p>{errors.password.message}</p>
+                                errors.password ?
+                                    <p>{errors.password.message}</p> : null
                             }
                         </div>
                         <div className="flex flex-col justify-start">
@@ -122,8 +123,8 @@ const Registration = (props) => {
                                 value={register.confirmPassword}
                             />
                             {
-                                errors.confirmPassword&&
-                                <p>{errors.confirmPassword.message}</p>
+                                errors.confirmPassword ?
+                                    <p>{errors.confirmPassword.message}</p> : null
                             }
                         </div>
                         {
@@ -133,8 +134,12 @@ const Registration = (props) => {
                                 <input className="input"
                                     type="password"
                                     name="adminPass"
-                                    onChange={(e) => setAdminPass(e.target.value)}
+                                    onChange={(e) => regChangeHandler(e)}
                                 />
+                                {
+                                    errors.adminPass ?
+                                        <p>{errors.adminPass.message}</p> : null
+                                }
                             </div>
                         }
                         <input className="input rounded-full w-full mt-3" type="submit" value={"Sign up"} />
