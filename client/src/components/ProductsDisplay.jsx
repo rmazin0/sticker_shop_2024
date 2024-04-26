@@ -26,7 +26,7 @@ const ProductsDisplay = (props) => {
                 {
                     products.map((product) => (
                         <div key={product._id} className='border border-black flex flex-col justify-evenly items-center w-56'>
-                            <img style={{width:'200px'}} loading='lazy' src={product.img.imgUrl} alt={product.productName} />
+                            <img style={{width:'200px'}} loading='lazy' src={product.imgUrl} alt={product.productName} />
                             <Link to={`/product/${product._id}/details`}><h3>{product.productName}</h3></Link>
                             <p>Price: ${product.productPrice}</p>
                             <p>Stock: {product.productStock} left</p>

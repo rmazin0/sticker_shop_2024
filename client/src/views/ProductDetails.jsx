@@ -9,25 +9,26 @@ const ProductDetails = (props) => {
     const { user, setUser} = useContext(userContext);
     const navigate = useNavigate();
     const [product, setProduct] = useState({
-        img: {
-            imgUrl:'',
-            public_id: '',
-        },
+        imgUrl:'',
+        public_id: '',
         productName: '',
         productPrice: '',
         productStock: '',
     })
 
+
     useEffect(() => {
-        axios.get('http://localhost:8000/api/user', {withCredentials:true})
-            .then((res) => {
-                // console.log(res);
-                setUser(res.data)
-            })
-            .catch((err) => {
-                navigate('/unauthorized')
-                console.log(err);
-            })
+        if (window.localStorage.getItem('uuid')) {
+            axios.get('http://localhost:8000/api/user', {withCredentials:true})
+                .then((res) => {
+                    // console.log(res);
+                    setUser(res.data)
+                })
+                .catch((err) => {
+                    navigate('/unauthorized')
+                    console.log(err);
+                })
+        }
     }, [])
 
     useEffect(() => {
@@ -55,7 +56,7 @@ const ProductDetails = (props) => {
     return (
         <>
             <Nav />
-            <img style={{width:'200px'}} src={product.img.imgUrl} alt={product.productName} />
+            <img style={{width:'200px'}} src={product.imgUrl} alt={product.productName} />
             <h3>{product.productName}</h3>
             <p>Price: {product.productPrice}</p>
             <p>Stock: {product.productStock}</p>

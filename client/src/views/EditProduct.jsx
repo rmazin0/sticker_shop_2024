@@ -2,16 +2,15 @@ import { useState, useContext, useEffect } from 'react'
 import axios from 'axios'
 import { useNavigate, useParams } from 'react-router-dom'
 import { userContext } from '../context/userContext'
+import Nav from '../components/Nav'
 
-const EditProduct= (props) => {
-    const {id} = useParams()
-    const {user, setUser} = useContext(userContext);
+const EditProduct = (props) => {
+    const { id } = useParams()
+    const { user, setUser } = useContext(userContext);
     const navigate = useNavigate();
     const [product, setProduct] = useState({
-        img: {
-            imgUrl:'',
-            public_id: '',
-        },
+        imgUrl: '',
+        public_id: '',
         productName: '',
         productPrice: '',
         productStock: '',
@@ -22,7 +21,7 @@ const EditProduct= (props) => {
     });
 
     useEffect(() => {
-        axios.get('http://localhost:8000/api/user', {withCredentials:true})
+        axios.get('http://localhost:8000/api/user', { withCredentials: true })
             .then((res) => {
                 // console.log(res);
                 setUser(res.data)
@@ -44,7 +43,7 @@ const EditProduct= (props) => {
             .catch((err) => {
                 console.log(err);
             })
-    },[])
+    }, [])
 
 
     const changeHandler = (e) => {
@@ -78,7 +77,7 @@ const EditProduct= (props) => {
         formData.append('productStock', product.productStock);
         formData.append('img', product.img);
         if (preview) {
-            formData.append('preview', preview.public_id)
+            formData.append('preview', preview.publicId)
         }
         axios.post(`http://localhost:8000/api/products/${id}`, formData)
             .then(res => {
@@ -92,53 +91,58 @@ const EditProduct= (props) => {
 
     return (
         <>
-            <h2>Edit Product</h2>
-            {
-                preview.imgUrl?
-                <img style={{width:'200px'}} loading='lazy' src={preview.imgUrl} alt={product.productName}/>:
-                <img style={{width:'200px'}} loading='lazy' src={product.img.imgUrl} alt={product.productName}/>
-            }
-            <form encType='multipart/form-data' onSubmit={submitHandler}>
-                <div>
-                    <label htmlFor="productName">Product Name</label>
-                    <input
-                        type="text"
-                        name='productName'
-                        onChange={(e) => changeHandler(e)}
-                        value={product.productName}
-                    />
+            <Nav />
+            <div className='main'> 
+                <div className="container flex-col p-5 mx-auto">
+                    <h2>Edit Product</h2>
+                    {
+                        preview.imgUrl ?
+                            <img style={{ width: '200px' }} loading='lazy' src={preview.imgUrl} alt={product.productName} /> :
+                            <img style={{ width: '200px' }} loading='lazy' src={product.imgUrl} alt={product.productName} />
+                    }
+                    <form encType='multipart/form-data' onSubmit={submitHandler}>
+                        <div className="flex flex-col justify-start">
+                            <label htmlFor="productName">Product Name</label>
+                            <input className="input"
+                                type="text"
+                                name='productName'
+                                onChange={(e) => changeHandler(e)}
+                                value={product.productName}
+                            />
+                        </div>
+                        <div className="flex flex-col justify-start">
+                            <label htmlFor="productPrice">Price</label>
+                            <input className="input"
+                                type='number'
+                                name='productPrice'
+                                onChange={(e) => changeHandler(e)}
+                                value={product.productPrice}
+                            />
+                        </div>
+                        <div className="flex flex-col justify-start">
+                            <label htmlFor="productStock">Amount</label>
+                            <input className="input"
+                                type="number"
+                                name='productStock'
+                                onChange={(e) => changeHandler(e)}
+                                value={product.productStock}
+                            />
+                        </div>
+                        <div className="flex flex-col justify-start">
+                            <label htmlFor="img">Product Image</label>
+                            <input className="input"
+                                type="file"
+                                name='img'
+                                onChange={(e) => changeHandler(e)}
+                            />
+                        </div>
+                        <input className="input rounded-full w-full mt-3" type="submit" value="update" />
+                    </form>
                 </div>
-                <div>
-                    <label htmlFor="productPrice">Price</label>
-                    <input
-                        type='number'
-                        name='productPrice'
-                        onChange={(e) => changeHandler(e)}
-                        value={product.productPrice}
-                    />
-                </div>
-                <div>
-                    <label htmlFor="productStock">Amount</label>
-                    <input
-                        type="number"
-                        name='productStock'
-                        onChange={(e) => changeHandler(e)}
-                        value={product.productStock}
-                    />
-                </div>
-                <div>
-                    <label htmlFor="imgUrl">Product Image</label>
-                    <input
-                        type="file"
-                        name='img'
-                        onChange={(e) => changeHandler(e)}
-                    />
-                </div>
-                <input type="submit" value="update" />
-            </form>
+            </div>
         </>
     )
 }
 
 export default EditProduct
-;
+    ;

@@ -8,12 +8,12 @@ const UserSchema = new Schema({
     username: {
         type:String,
         required: [true, 'Username is required.'],
-        unique: [true, 'Username is already taken.']
+        unique: true
     },
     email: {
         type:String,
         required: [true, 'Email is required.'],
-        unique: [true, 'Email is already taken.'],
+        unique: true,
         validate: [isEmail, 'Invalid Email.']
     },
     password : {
@@ -27,7 +27,7 @@ const UserSchema = new Schema({
     }
 }, {timestamps: true})
 UserSchema.plugin(mongooseModelValidator, {message:'A user with this {PATH} already exists.'});
-
+/// if you dont need to save a key pair variable in model and stil have validation,,,do this 
 UserSchema.virtual('confirmPassword')
     .get(function() {
         return this._confirmPassword

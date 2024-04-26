@@ -8,11 +8,18 @@ const CreateProduct = (props) => {
     const { user, setUser } = useContext(userContext);
     const navigate = useNavigate();
     const [product, setProduct] = useState({
-        img: '',
+        // img is file state
+        img: '', 
         productName: '',
         productPrice: '',
         productStock: '',
     })
+    const [preview, setPreview] = useState({
+        imgUrl: '',
+        publicId: '',
+    });
+    const [errors, setErrors] = useState([])
+
 
     useEffect(() => {
             axios.get('http://localhost:8000/api/user', { withCredentials: true })
@@ -31,6 +38,15 @@ const CreateProduct = (props) => {
 
     const changeHandler = (e) => {
         if (e.target.name === 'img') {
+            const formData = new FormData()
+            formData.append('img', e.target.files[0])
+            axios.post('http://localhost:8000/api/preview', formData)
+                .then((res) => {
+                    setPreview(res.data)
+                })
+                .catch((err) => {
+                    console.log(err);
+                })
             setProduct({
                 ...product,
                 img: e.target.files[0]
@@ -50,6 +66,10 @@ const CreateProduct = (props) => {
         formData.append('productPrice', product.productPrice);
         formData.append('productStock', product.productStock);
         formData.append('img', product.img);
+        if (preview) {
+            formData.append('preview', preview.publicId)
+        }
+        // console.log(formData);
         axios.post('http://localhost:8000/api/products', formData)
             .then(res => {
                 navigate('/home');
@@ -57,6 +77,9 @@ const CreateProduct = (props) => {
             })
             .catch(err => {
                 console.log(err);
+                if (err.response.data.errors){
+                    setErrors(err.response.data.errors)
+                }
             })
     }
 
@@ -64,50 +87,71 @@ const CreateProduct = (props) => {
         <>
             <Nav />
             <div className="main">
-                <div>
+                <div className="container flex-col p-5 mx-auto">
                     {
                         user.isAdmin ?
                             <h2>Hello Admin {user.username}</h2> :
                             <h2>Hello {user.username}</h2>
                     }
                     <h2>Add a Product</h2>
+                    {
+                        preview.imgUrl ?
+                            <img style={{ width: '200px' }} loading='lazy' src={preview.imgUrl} alt={product.productName} /> :
+                            <img style={{ width: '200px' }} loading='lazy' src={product.img.imgUrl} alt={product.productName} />
+                    }
                     <form encType='multipart/form-data' onSubmit={submitHandler}>
-                        <div>
+                        <div className="flex flex-col justify-start">
                             <label htmlFor="productName">Product Name</label>
-                            <input
+                            <input className="input"
                                 type="text"
                                 name='productName'
                                 onChange={(e) => changeHandler(e)}
                                 value={product.productName}
                             />
+                            {
+                                errors.productName?
+                                <p>{errors.productName.message}</p>:null
+                            }
                         </div>
-                        <div>
+                        <div className="flex flex-col justify-start">
                             <label htmlFor="productPrice">Price</label>
-                            <input
+                            <input className="input"
                                 type='number'
                                 name='productPrice'
                                 onChange={(e) => changeHandler(e)}
                                 value={product.productPrice}
                             />
+                            {
+                                errors.productPrice?
+                                <p>{errors.productPrice.message}</p>:null
+                            }
                         </div>
-                        <div>
+                        <div className="flex flex-col justify-start">
                             <label htmlFor="productStock">Amount</label>
-                            <input
+                            <input className="input"
                                 type="number"
                                 name='productStock'
                                 onChange={(e) => changeHandler(e)}
                                 value={product.productStock}
                             />
+                            {
+                                errors.productStock?
+                                <p>{errors.productStock.message}</p>:null
+                            }
                         </div>
-                        <div>
-                            <label htmlFor="imgUrl">Product Image</label>
-                            <input
+                        <div className="flex flex-col justify-start"> 
+                            <label htmlFor="img">Product Image</label>
+                            <input className="input"
                                 type="file"
                                 name='img'
                                 onChange={(e) => changeHandler(e)}
                             />
+                            {
+                                errors.publicId?
+                                <p>{errors.publicId.message}</p>:null
+                            }
                         </div>
-                        <input type="submit" value="submit" />
+                        <input className="input rounded-full w-full mt-3" type="submit" value="submit" />
                     </form>
                 </div>
             </div>

@@ -24,7 +24,7 @@ const Nav = (props) => {
             <header className='flex justify-between items-center text-yellow-50'>
                 <Link to={'/'} className='flex items-center'>
                     <img className='w-16 caret-transparent' src={logo} alt="Store Logo" />
-                    <h1 className='text-4xl cursor-pointer caret-transparent'>Store Name</h1>
+                    <h1 className='text-4xl cursor-pointer caret-transparent'>thekneeecaps</h1>
                 </Link>
                 {
                     user.isAdmin && window.localStorage.getItem('uuid')&&

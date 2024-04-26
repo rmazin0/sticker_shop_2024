@@ -17,7 +17,6 @@ const Registration = (props) => {
         adminPass: '',
     })
     const [errors, setErrors] = useState([])
-    const [secretError, setSecretError] = useState([])
 
 
     const registerHandler = (e) => {
@@ -31,12 +30,7 @@ const Registration = (props) => {
             })
             .catch((err) => {
                 console.log(err);
-                if (err.response.data.errors) {
                     setErrors(err.response.data.errors);
-                }
-                if (err.response.data.keyError) {
-                    setSecretError(err.response.data.keyError);
-                }
             })
     }
 

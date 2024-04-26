@@ -14,11 +14,17 @@ function App() {
   return (
     <>
     {/* 
-      1. FIND A WAY TO SAVE EDITED PRODUCTS WITHOUT NEEDING TO UPLOAD NEW PICTURE 
-      IDEAS: TOGGLE UPLOAD PICTURE=>NOT REQUIRED TO UPLOAD A NEW FILE=> ADD CONDITIONS TO UPLOAD FILE AND PRODUCT OBJECT IN CONTROLLER
-      2. ADD VALIDATIONS PROBABLY FRONTEND TOO
-      3. FRONT END DESIGN
-      4. CHECKOUT PAGE
+    todo tom - immediate - test validations
+      **************FRONT END DESIGN***************
+      1. Hero page
+      2. Footer component
+      3. Product display
+      4. Device responsive(for phones)
+      4. Background???
+      -----------------BONUSES---------------------
+      1. checkout page( if di maimplement yung api, kahit view route lang)
+      2. animations(dropdown, add counter to cart)
+      3. categories (maybe in form of tags)
     */}
 
       <Routes>
