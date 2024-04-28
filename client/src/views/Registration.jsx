@@ -2,7 +2,6 @@ import { useState, useContext } from "react";
 import axios from 'axios';
 import { Link, useNavigate } from "react-router-dom";
 import { userContext } from "../context/userContext";
-import logo from "../assets/images/store-logo.jpg";
 import Nav from "../components/Nav";
 
 const Registration = (props) => {

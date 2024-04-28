@@ -25,7 +25,7 @@ const Nav = (props) => {
                 <header className='flex justify-between items-center text-yellow-50 text-xl'>
                     <div className='w-1/2'>
                         <Link to={'/'} className='flex items-center'>
-                            <img className='w-16 caret-transparent' src={logo} alt="Store Logo" />
+                            <img className='w-16 caret-transparent mx-10' src={logo} alt="Store Logo" />
                         </Link>
                     </div>
                     {
@@ -35,8 +35,8 @@ const Nav = (props) => {
                     <Link to={'/products'}><button>Products</button></Link>
                     {
                         window.localStorage.getItem('uuid') ?
-                            <button className='button--nav' onClick={logout}>Sign out</button> :
-                            <div>
+                            <button className='button--nav mr-10' onClick={logout}>Sign out</button> :
+                            <div className='mr-10'>
                                 <Link className='mr-4' to={'/login'}><button>Sign in</button></Link>
                                 <Link to={'/register'}><button className='button--nav'>Sign up</button></Link>
                             </div>

@@ -17,7 +17,7 @@
   }
 
   .main {
-    @apply flex flex-col bg-stone-50 h-screen py-40
+    @apply flex flex-col bg-amber-100 h-screen py-40
   }
 
   .button {
