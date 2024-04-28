@@ -4,8 +4,9 @@ import { useNavigate } from 'react-router-dom';
 import { userContext } from '../context/userContext';
 import Nav from '../components/Nav';
 import ProductsDisplay from '../components/ProductsDisplay';
+import Footer from '../components/Footer';
 
-const Home = (props) => {
+const Products = (props) => {
     // const id = window.localStorage.getItem('uuid') //passes user id that is stored in localStorage of website
     const {user, setUser} = useContext(userContext)
     const navigate = useNavigate();
@@ -27,15 +28,16 @@ const Home = (props) => {
     return (
         <div>
             <Nav/>
-            {
+            {/* {
                 user.isAdmin&&window.localStorage.getItem('uuid')? //checks if a user is admin & in local
                 <h2>Hello Admin {user.username}</h2>:
                 !user.isAdmin&&window.localStorage.getItem('uuid')?//checks if a user is not admin & in local
                 <h2>Hello {user.username}</h2>:
                 <h2>Hello!</h2>
-            }
+            } */}
             <ProductsDisplay/>
+            <Footer/>
         </div>
 )}
 
-export default Home;
+export default Products;

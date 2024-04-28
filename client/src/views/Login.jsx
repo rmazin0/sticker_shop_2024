@@ -42,15 +42,14 @@ const Login = (props) => {
             <Nav />
             <div className="main">
                 <div className="container flex-col p-5 mx-auto">
-                    <h2>Login</h2>
+                    <h2 className='text-4xl'>Login to your account</h2>
                     {
-                        error&&
-                        <p>{error}</p>
+                        error &&
+                        <p className='text-red-600'>{error}</p>
                     }
                     <form onSubmit={loginHandler} className="w-4/5">
                         <div className="flex flex-col justify-start">
-                            <label htmlFor="username">Username</label>
-                            
+                            <label className='text-xl' htmlFor="username">Username</label>
                             <input className="input"
                                 type="text"
                                 name="username"
@@ -58,10 +57,9 @@ const Login = (props) => {
                                 onChange={(e) => loginChangeHandler(e)}
                                 value={login.username}
                             />
-
                         </div>
                         <div className="flex flex-col justify-start">
-                            <label htmlFor="password">Password</label>
+                            <label className='text-xl' htmlFor="password">Password</label>
                             <input className="input"
                                 type="password"
                                 name="password"
@@ -71,7 +69,7 @@ const Login = (props) => {
                         </div>
                         <input className="input rounded-full w-full mt-3" type="submit" value={"Sign in"} />
                     </form>
-                    <p>Don't have an account? <Link to={'/register'}>Sign Up</Link></p>
+                    <p>Don't have an account? <Link to={'/register'}><span className="text-blue-600 underline">Sign up</span></Link></p>
                 </div>
             </div>
         </>

@@ -19,4 +19,8 @@
   .main {
     @apply flex flex-col bg-stone-50 h-screen py-40
   }
+
+  .button {
+    @apply border border-stone-500 rounded-full mt-3 px-2 py-1
+  }
 }

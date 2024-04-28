@@ -72,7 +72,7 @@ const CreateProduct = (props) => {
         // console.log(formData);
         axios.post('http://localhost:8000/api/products', formData)
             .then(res => {
-                navigate('/home');
+                navigate('/products');
                 console.log(res);
             })
             .catch(err => {
@@ -88,12 +88,12 @@ const CreateProduct = (props) => {
             <Nav />
             <div className="main">
                 <div className="container flex-col p-5 mx-auto">
-                    {
+                    {/* {
                         user.isAdmin ?
                             <h2>Hello Admin {user.username}</h2> :
                             <h2>Hello {user.username}</h2>
-                    }
-                    <h2>Add a Product</h2>
+                    } */}
+                    <h2 className='text-4xl'>Add a Product</h2>
                     {
                         preview.imgUrl ?
                             <img style={{ width: '200px' }} loading='lazy' src={preview.imgUrl} alt={product.productName} /> :
@@ -101,7 +101,7 @@ const CreateProduct = (props) => {
                     }
                     <form encType='multipart/form-data' onSubmit={submitHandler}>
                         <div className="flex flex-col justify-start">
-                            <label htmlFor="productName">Product Name</label>
+                            <label className='text-xl' htmlFor="productName">Product Name</label>
                             <input className="input"
                                 type="text"
                                 name='productName'
@@ -110,11 +110,11 @@ const CreateProduct = (props) => {
                             />
                             {
                                 errors.productName?
-                                <p>{errors.productName.message}</p>:null
+                                <p className='text-red-600'>{errors.productName.message}</p>:null
                             }
                         </div>
                         <div className="flex flex-col justify-start">
-                            <label htmlFor="productPrice">Price</label>
+                            <label className='text-xl' htmlFor="productPrice">Price ($)</label>
                             <input className="input"
                                 type='number'
                                 name='productPrice'
@@ -123,11 +123,11 @@ const CreateProduct = (props) => {
                             />
                             {
                                 errors.productPrice?
-                                <p>{errors.productPrice.message}</p>:null
+                                <p className='text-red-600'>{errors.productPrice.message}</p>:null
                             }
                         </div>
                         <div className="flex flex-col justify-start">
-                            <label htmlFor="productStock">Amount</label>
+                            <label className='text-xl' htmlFor="productStock">Amount</label>
                             <input className="input"
                                 type="number"
                                 name='productStock'
@@ -136,11 +136,11 @@ const CreateProduct = (props) => {
                             />
                             {
                                 errors.productStock?
-                                <p>{errors.productStock.message}</p>:null
+                                <p className='text-red-600'>{errors.productStock.message}</p>:null
                             }
                         </div>
                         <div className="flex flex-col justify-start"> 
-                            <label htmlFor="img">Product Image</label>
+                            <label className='text-xl' htmlFor="img">Product Image</label>
                             <input className="input"
                                 type="file"
                                 name='img'
@@ -148,7 +148,7 @@ const CreateProduct = (props) => {
                             />
                             {
                                 errors.publicId?
-                                <p>{errors.publicId.message}</p>:null
+                                <p className='text-red-600'>{errors.publicId.message}</p>:null
                             }
                         </div>
                         <input className="input rounded-full w-full mt-3" type="submit" value="submit" />

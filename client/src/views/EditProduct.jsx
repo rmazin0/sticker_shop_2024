@@ -19,6 +19,8 @@ const EditProduct = (props) => {
         imgUrl: '',
         public_id: '',
     });
+    const [errors, setErrors] = useState([])
+
 
     useEffect(() => {
         axios.get('http://localhost:8000/api/user', { withCredentials: true })
@@ -81,11 +83,14 @@ const EditProduct = (props) => {
         }
         axios.post(`http://localhost:8000/api/products/${id}`, formData)
             .then(res => {
-                navigate('/home');
+                navigate('/products');
                 console.log(res);
             })
             .catch(err => {
                 console.log(err);
+                if (err.response.data.errors){
+                    setErrors(err.response.data.errors)
+                }
             })
     }
 
@@ -94,7 +99,7 @@ const EditProduct = (props) => {
             <Nav />
             <div className='main'> 
                 <div className="container flex-col p-5 mx-auto">
-                    <h2>Edit Product</h2>
+                    <h2 className='text-4xl'>Edit Product</h2>
                     {
                         preview.imgUrl ?
                             <img style={{ width: '200px' }} loading='lazy' src={preview.imgUrl} alt={product.productName} /> :
@@ -102,34 +107,46 @@ const EditProduct = (props) => {
                     }
                     <form encType='multipart/form-data' onSubmit={submitHandler}>
                         <div className="flex flex-col justify-start">
-                            <label htmlFor="productName">Product Name</label>
+                            <label className='text-xl' htmlFor="productName">Product Name</label>
                             <input className="input"
                                 type="text"
                                 name='productName'
                                 onChange={(e) => changeHandler(e)}
                                 value={product.productName}
-                            />
+                                />
+                                {
+                                errors.productName?
+                                    <p className='text-red-600'>{errors.productName.message}</p>:null
+                                }
                         </div>
                         <div className="flex flex-col justify-start">
-                            <label htmlFor="productPrice">Price</label>
+                            <label className='text-xl' htmlFor="productPrice">Price ($)</label>
                             <input className="input"
                                 type='number'
                                 name='productPrice'
                                 onChange={(e) => changeHandler(e)}
                                 value={product.productPrice}
                             />
+                            {
+                                errors.productPrice?
+                                <p className='text-red-600'>{errors.productPrice.message}</p>:null
+                            }
                         </div>
                         <div className="flex flex-col justify-start">
-                            <label htmlFor="productStock">Amount</label>
+                            <label className='text-xl' htmlFor="productStock">Amount</label>
                             <input className="input"
                                 type="number"
                                 name='productStock'
                                 onChange={(e) => changeHandler(e)}
                                 value={product.productStock}
                             />
+                            {
+                                errors.productStock?
+                                <p className='text-red-600'>{errors.productStock.message}</p>:null
+                            }
                         </div>
                         <div className="flex flex-col justify-start">
-                            <label htmlFor="img">Product Image</label>
+                            <label className='text-xl' htmlFor="img">Product Image</label>
                             <input className="input"
                                 type="file"
                                 name='img'

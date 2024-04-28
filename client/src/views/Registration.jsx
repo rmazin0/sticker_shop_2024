@@ -47,12 +47,12 @@ const Registration = (props) => {
             <Nav />
             <div className="flex flex-col bg-stone-50 h-screen py-40">
                 <div className="container flex-col p-5 mx-auto">
-                    <h2>Create an Account!</h2>
+                    <h2 className='text-4xl' >Create an Account!</h2>
                     <form onSubmit={registerHandler} className="w-4/5">
                         <div className="flex justify-start">
-                            <h2>Register as:</h2>
+                            <h2 className='text-xl'>Register as:</h2>
                             <div className="mx-5">
-                                <label className="mx-5" htmlFor="isAdmin">User</label>
+                                <label className="mx-5 text-xl" htmlFor="isAdmin">User</label>
                                 <input
                                     type="radio"
                                     name="isAdmin"
@@ -60,7 +60,7 @@ const Registration = (props) => {
                                     value={false}
                                     defaultChecked={!register.isAdmin}
                                 />
-                                <label className="mx-5" htmlFor="isAdmin">Admin</label>
+                                <label className='mx-5 text-xl' htmlFor="isAdmin">Admin</label>
                                 <input
                                     type="radio"
                                     name="isAdmin"
@@ -70,7 +70,7 @@ const Registration = (props) => {
                             </div>
                         </div>
                         <div className="flex flex-col justify-start">
-                            <label htmlFor="username">Username</label>
+                            <label className='text-xl' htmlFor="username">Username</label>
                             <input className="input"
                                 type="text"
                                 name="username"
@@ -79,11 +79,11 @@ const Registration = (props) => {
                             />
                             {
                                 errors.username ?
-                                    <p>{errors.username.message}</p> : null
+                                    <p className='text-red-600'>{errors.username.message}</p> : null
                             }
                         </div>
                         <div className="flex flex-col justify-start">
-                            <label htmlFor="email">Email</label>
+                            <label className='text-xl' htmlFor="email">Email</label>
                             <input className="input"
                                 type="text"
                                 name="email"
@@ -92,11 +92,11 @@ const Registration = (props) => {
                             />
                             {
                                 errors.email ?
-                                    <p>{errors.email.message}</p> : null
+                                    <p className='text-red-600'>{errors.email.message}</p> : null
                             }
                         </div>
                         <div className="flex flex-col justify-start">
-                            <label htmlFor="password">Password</label>
+                            <label className='text-xl' htmlFor="password">Password</label>
                             <input className="input"
                                 type="password"
                                 name="password"
@@ -105,11 +105,11 @@ const Registration = (props) => {
                             />
                             {
                                 errors.password ?
-                                    <p>{errors.password.message}</p> : null
+                                    <p className='text-red-600'>{errors.password.message}</p> : null
                             }
                         </div>
                         <div className="flex flex-col justify-start">
-                            <label htmlFor="confirmPassword">Confirm Password</label>
+                            <label className='text-xl' htmlFor="confirmPassword">Confirm Password</label>
                             <input className="input"
                                 type="password"
                                 name="confirmPassword"
@@ -118,13 +118,13 @@ const Registration = (props) => {
                             />
                             {
                                 errors.confirmPassword ?
-                                    <p>{errors.confirmPassword.message}</p> : null
+                                    <p className='text-red-600'>{errors.confirmPassword.message}</p> : null
                             }
                         </div>
                         {
                             register.isAdmin === 'true' &&
                             <div className="flex flex-col justify-start">
-                                <label htmlFor="adminPass">Admin Pass</label>
+                                <label className='text-xl' htmlFor="adminPass">Admin Pass</label>
                                 <input className="input"
                                     type="password"
                                     name="adminPass"
@@ -132,13 +132,13 @@ const Registration = (props) => {
                                 />
                                 {
                                     errors.adminPass ?
-                                        <p>{errors.adminPass.message}</p> : null
+                                        <p className='text-red-600'>{errors.adminPass.message}</p> : null
                                 }
                             </div>
                         }
                         <input className="input rounded-full w-full mt-3" type="submit" value={"Sign up"} />
                     </form>
-                    <p>Already have an account? <Link to={'/login'}>Sign In</Link></p>
+                    <p>Already have an account? <Link to={'/login'}><span className="text-blue-600 underline">Sign In</span></Link></p>
                 </div>
             </div>
         </>

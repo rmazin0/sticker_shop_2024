@@ -5,11 +5,11 @@ import axios from 'axios';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 
 const ProductDetails = (props) => {
-    const {id} = useParams();
-    const { user, setUser} = useContext(userContext);
+    const { id } = useParams();
+    const { user, setUser } = useContext(userContext);
     const navigate = useNavigate();
     const [product, setProduct] = useState({
-        imgUrl:'',
+        imgUrl: '',
         public_id: '',
         productName: '',
         productPrice: '',
@@ -19,7 +19,7 @@ const ProductDetails = (props) => {
 
     useEffect(() => {
         if (window.localStorage.getItem('uuid')) {
-            axios.get('http://localhost:8000/api/user', {withCredentials:true})
+            axios.get('http://localhost:8000/api/user', { withCredentials: true })
                 .then((res) => {
                     // console.log(res);
                     setUser(res.data)
@@ -46,7 +46,7 @@ const ProductDetails = (props) => {
     const deleteHandler = () => {
         axios.delete(`http://localhost:8000/api/products/${id}`)
             .then((res) => {
-                navigate('/home')
+                navigate('/products')
             })
             .catch((err) => {
                 console.log(err);
@@ -56,18 +56,22 @@ const ProductDetails = (props) => {
     return (
         <>
             <Nav />
-            <img style={{width:'200px'}} src={product.imgUrl} alt={product.productName} />
-            <h3>{product.productName}</h3>
-            <p>Price: {product.productPrice}</p>
-            <p>Stock: {product.productStock}</p>
-            {
-                user.isAdmin?
-                <div>
-                    <Link to={`/product/${product._id}/edit`}><button>edit</button></Link>
-                    <button onClick={deleteHandler}>delete</button>
-                </div>:
-                <Link to={`/checkout`}><button>buy</button></Link>
-            }
+            <div className='main'>
+                <div className="container flex-col p-5 mx-auto">
+                <img style={{ width: '200px' }} src={product.imgUrl} alt={product.productName} />
+                <h3 className='text-3xl'>{product.productName}</h3>
+                <p className='text-xl'>Price: ${product.productPrice}</p>
+                <p className='text-xl'>Stock: {product.productStock}</p>
+                {
+                    user.isAdmin ?
+                        <div className='w-28 flex justify-between'>
+                            <Link to={`/product/${product._id}/edit`}><button className='button'>edit</button></Link>
+                            <button className='button text-white bg-red-500 border-red-500' onClick={deleteHandler}>delete</button>
+                        </div> :
+                        <Link to={`/checkout/${product._id}`}><button>buy</button></Link>
+                }
+                </div>
+            </div>
         </>
     )
 }
