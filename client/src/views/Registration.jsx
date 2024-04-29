@@ -43,7 +43,6 @@ const Registration = (props) => {
 
     return (
         <>
-            <Nav />
             <div className="flex flex-col bg-stone-50 h-screen py-40">
                 <div className="container flex-col p-5 mx-auto">
                     <h2 className='text-4xl' >Create an Account!</h2>

@@ -39,7 +39,6 @@ const Login = (props) => {
 
     return (
         <>
-            <Nav />
             <div className="main">
                 <div className="container flex-col p-5 mx-auto">
                     <h2 className='text-4xl'>Login to your account</h2>

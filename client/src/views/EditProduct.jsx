@@ -25,7 +25,7 @@ const EditProduct = (props) => {
     useEffect(() => {
         axios.get('http://localhost:8000/api/user', { withCredentials: true })
             .then((res) => {
-                // console.log(res);
+                console.log(res.data);
                 setUser(res.data)
                 if (!res.data.isAdmin) {
                     navigate('/unauthorized')
@@ -96,7 +96,6 @@ const EditProduct = (props) => {
 
     return (
         <>
-            <Nav />
             <div className='main'> 
                 <div className="container flex-col p-5 mx-auto">
                     <h2 className='text-4xl'>Edit Product</h2>

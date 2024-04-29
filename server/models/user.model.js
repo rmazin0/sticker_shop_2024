@@ -24,6 +24,17 @@ const UserSchema = new Schema({
     isAdmin : {
         type:Boolean,
         default:false
+    },
+    orders: {
+        productId: {
+            type: String
+        },
+        quantity: {
+            type: Number
+        },
+        price: {
+            type: Number
+        }
     }
 }, {timestamps: true})
 UserSchema.plugin(mongooseModelValidator, {message:'A user with this {PATH} already exists.'});

@@ -8,6 +8,8 @@ import Registration from './views/Registration';
 import Hero from './views/Hero';
 import Products from './views/Products';
 import Checkout from './views/Checkout';
+import Nav from './components/Nav';
+import Footer from './components/Footer';
 
 
 function App() {
@@ -27,7 +29,7 @@ function App() {
       2. animations(dropdown, add counter to cart)
       3. categories (maybe in form of tags)
     */}
-
+      <Nav/>
       <Routes>
         <Route index element={<Hero/>}/>
         <Route path='/login' element={<Login/>}/>
@@ -36,9 +38,10 @@ function App() {
         <Route path='/product/create' element={<CreateProduct/>}/>
         <Route path='/product/:id/details' element={<ProductDetails/>}/>
         <Route path='/product/:id/edit' element={<EditProduct/>}/>
-        <Route path='/checkout/:id' element={<Checkout/>}/>
+        <Route path='/checkout' element={<Checkout/>}/>
         <Route path='/unauthorized' element={<Unauthorized/>}/>
       </Routes>
+      <Footer/>
     </>
   )
 }

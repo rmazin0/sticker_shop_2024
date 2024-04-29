@@ -27,7 +27,6 @@ const Products = (props) => {
         }, [])
     return (
         <div>
-            <Nav/>
             {/* {
                 user.isAdmin&&window.localStorage.getItem('uuid')? //checks if a user is admin & in local
                 <h2>Hello Admin {user.username}</h2>:
@@ -36,7 +35,6 @@ const Products = (props) => {
                 <h2>Hello!</h2>
             } */}
             <ProductsDisplay/>
-            <Footer/>
         </div>
 )}
 

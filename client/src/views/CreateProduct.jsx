@@ -5,7 +5,7 @@ import { userContext } from '../context/userContext'
 import Nav from '../components/Nav'
 
 const CreateProduct = (props) => {
-    const { user, setUser } = useContext(userContext);
+    const {setUser } = useContext(userContext);
     const navigate = useNavigate();
     const [product, setProduct] = useState({
         // img is file state
@@ -85,7 +85,6 @@ const CreateProduct = (props) => {
 
     return (
         <>
-            <Nav />
             <div className="main">
                 <div className="container flex-col p-5 mx-auto">
                     {/* {

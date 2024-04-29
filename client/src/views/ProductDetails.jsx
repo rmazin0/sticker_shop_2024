@@ -35,7 +35,7 @@ const ProductDetails = (props) => {
         axios.get(`http://localhost:8000/api/products/${id}`)
             .then((res) => {
                 setProduct(res.data);
-                console.log(res.data);
+                // console.log(res.data);
             })
             .catch((err) => {
                 console.log(err);
@@ -55,7 +55,6 @@ const ProductDetails = (props) => {
     }
     return (
         <>
-            <Nav />
             <div className='main'>
                 <div className="container flex-col p-5 mx-auto">
                 <img style={{ width: '200px' }} src={product.imgUrl} alt={product.productName} />

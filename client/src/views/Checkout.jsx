@@ -1,79 +1,69 @@
 import { useContext, useEffect, useState } from 'react'
+import { cartContext } from '../context/cartContext'
 import axios from 'axios'
-import { userContext } from '../context/userContext'
-import { Link, useParams } from 'react-router-dom'
-import Nav from '../components/Nav'
-import Footer from '../components/Footer'
+import { Link } from 'react-router-dom'
 
 const Checkout = (props) => {
-    const { id } = useParams();
-    const { user, setUser } = useContext(userContext)
-    const [product, setProduct] = useState({
-        imgUrl: '',
-        public_id: '',
-        productName: '',
-        productPrice: '',
-        productStock: '',
-    })
+    const { cartItems, setCartItems } = useContext(cartContext)
+    const [products, setProducts] = useState([])
 
     useEffect(() => {
-        if (window.localStorage.getItem('uuid')) {
-            axios.get('http://localhost:8000/api/user', { withCredentials: true })
-                .then((res) => {
-                    // console.log(res);
-                    setUser(res.data)
-                })
-                .catch((err) => {
-                    navigate('/unauthorized')
-                    console.log(err);
-                })
-        }
-    }, [])
-
-    useEffect(() => {
-        axios.get(`http://localhost:8000/api/products/${id}`)
+        axios.get('http://localhost:8000/api/products')
             .then((res) => {
-                setProduct(res.data);
-                console.log(res.data);
+                // console.log(res.data);
+                setProducts(res.data)
             })
             .catch((err) => {
                 console.log(err);
             })
     }, [])
 
+    const addToCartHandler = (id) => {
+        setCartItems((prevValue) => ({
+            ...prevValue,
+            [id]: prevValue[id] + 1
+        }))
+    }
+
+    const removeFromCartHandler = (id) => {
+        setCartItems((prevValue) => ({
+            ...prevValue,
+            [id]: prevValue[id] - 1
+        }))
+    }
+
     return (
         <>
-            <Nav />
-            <div className='main'>
-                <div className="container flex-col p-5 mx-auto">
-                    <div>
-                        <img style={{ width: '200px' }} src={product.imgUrl} alt={product.productName} />
-                        <h3 className='text-3xl'>{product.productName}</h3>
-                        <p className='text-xl'>Price: ${product.productPrice}</p>
-                        <p className='text-xl'>Stock: {product.productStock}</p>
-                        {
-                            user.isAdmin ?
-                                <div className='w-28 flex justify-between'>
-                                    <Link to={`/product/${product._id}/edit`}><button className='button'>edit</button></Link>
-                                    <button className='button text-white bg-red-500 border-red-500' onClick={deleteHandler}>delete</button>
-                                </div> :
-                                <Link to={`/checkout`}><button>buy</button></Link>
-                        }
-                    </div>
-                    <form>
-                        <div className="flex flex-col justify-start">
-                            <label className='text-xl' htmlFor="username">Username</label>
-                            <input className="input"
-                                type="text"
-                                name="username"
-                                id="username"
-                                onChange={(e) => loginChangeHandler(e)}
-                            />
-                        </div>
-                    </form>
+            <div className="main">
+                <h1 className='text-5xl text-center'>Your Cart Items</h1>
+                <div>
+                    {
+                        products.map((product) => (
+                            <div key={product._id} className='rounded-xl bg-white grid grid-cols-3'>
+                                {
+                                    cartItems[product._id] > 0 &&
+                                    <div className='border border-stone-500 rounded flex flex-col justify-evenly items-center '>
+                                        <img style={{ width: '200px' }} loading='lazy' src={product.imgUrl} alt={product.productName} />
+                                        <Link to={`/product/${product._id}/details`}><h3 className='text-3xl'>{product.productName}</h3></Link>
+                                        <div className="flex justify-evenly items-baseline">
+                                            <button className='button border-amber-500 text-white bg-amber-500 px-2'
+                                                onClick={(e) => addToCartHandler(product._id)}>
+                                                +
+                                            </button>
+                                            <p className='text-xl'>Amount: {cartItems[product._id]}</p>
+                                            <button className='button border-amber-500 text-white bg-amber-500 px-2'
+                                                onClick={(e) => removeFromCartHandler(product._id)}>
+                                                -
+                                            </button>
+                                        </div>
+                                        <p className='text-xl'>Price: ${product.productPrice * cartItems[product._id]}</p>
+                                    </div>
+                                }
+                            </div>
+                        ))
+                    }
                 </div>
             </div>
-            <Footer />
         </>
     )
 }
