@@ -31,26 +31,27 @@ const Hero = (props) => {
 
     return (
         <>
-            <div className='flex lg:flex-row lg:justify-evenly lg:align-middle flex-col justify-center items-center py-40 -mt-20  w-full lg:h-4/6 xl:h-[100%] mb-[9.7rem]'>
+            <div className='flex lg:flex-row lg:justify-evenly lg:align-middle flex-col justify-center items-center py-40 -mt-20  w-full lg:h-4/6 xl:h-[100%] mb-[9.7rem] bg-neutral-950 text-white'>
                 <h1 className='w-1/2 text-5xl md:text-6xl lg:text-7xl m-10 font-semibold'>Unleash your creativity with a sticker for every style</h1>
                 <div className='flex flex-col text-center lg:text-start m-10'>
                     <p className='text-xl xl:text-2xl lg:m-2'>Ready to add some personality to your world? Start Decorating Today!</p>
                     <p className='text-xl xl:text-2xl lg:m-2'>Shop TheKneecaps today and let your creativity run wild!</p>
-                    <Link to={'/products'} ><button className='button border-amber-500 text-2xl text-white font-semibold bg-amber-500 p-4'>BROWSE COLLECTION</button></Link>
+                    <Link to={'/products'} ><button className='button border-amber-500 text-2xl  font-semibold bg-amber-500 p-4 hover:bg-neutral-200 hover:text-amber-500 hover:border hover:border-amber-500'>BROWSE COLLECTION</button></Link>
+                </div>
+
+            </div>
+            <div className='flex justify-center w-full gap-4 mx-auto px-5 bg-neutral-700'>
+                <div className='bg-amber-700 -my-16 max-w-sm 2xl:max-w-lg border border-stone-800 rounded p-3 z-10'>
+                    <img src={breathe} shadow-lg alt="breathe sticker" />
+                </div>
+                <div className='bg-amber-700 -my-16 max-w-sm 2xl:max-w-lg border border-stone-800 rounded p-3 z-10'>
+                    <img src={dog} shadow-lg alt="dog sticker" />
+                </div>
+                <div className='bg-amber-700 -my-16 max-w-sm 2xl:max-w-lg border border-stone-800 rounded p-3 z-10'>
+                    <img src={ramen} shadow-lg alt="ramen sticker" />
                 </div>
             </div>
-            <div className='flex justify-center w-full gap-4 mx-auto px-5 bg-stone-800'>
-                <div className='bg-white -my-16 max-w-sm 2xl:max-w-lg border border-stone-800 rounded p-3 z-10'>
-                    <img src={breathe} alt="breathe sticker" />
-                </div>
-                <div className='bg-white -my-16 max-w-sm 2xl:max-w-lg border border-stone-800 rounded p-3 z-10'>
-                    <img src={dog} alt="dog sticker" />
-                </div>
-                <div className='bg-white -my-16 max-w-sm 2xl:max-w-lg border border-stone-800 rounded p-3 z-10'>
-                    <img src={ramen} alt="ramen sticker" />
-                </div>
-            </div>
-            <div className='p-10 pt-40 xl:pt-36 w-full flex items-center gap-4 mx-auto px-5 bg-white/30 backdrop-blur-lg'>
+            <div className='p-10 pt-40 xl:pt-36 shadow-2xl w-full flex items-center gap-4 mx-auto px-5 text-black'>
                 <div className='shadow-xl'>
                     <p className='text-xl xl:text-3xl bg-white rounded-xl py-20 pl-20 pr-28'>
                     Welcome to TheKneecaps! I'm Danie, the founder and creative force behind this space. From a young age, I've been captivated by the power of art to transport us beyond the everyday. As a self-taught artist, I've honed my craft through passion and perseverance, using creativity as a sanctuary from life's pressures. Join me on this journey as we explore the boundless possibilities of artistic expression together.

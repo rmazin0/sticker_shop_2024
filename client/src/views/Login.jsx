@@ -39,7 +39,7 @@ const Login = (props) => {
 
     return (
         <>
-                <div className="container flex-col mx-auto h-1/2 lg:h-[80%] lg:p-20 shadow-xl">
+                <div className="container flex-col mx-auto h-1/2 lg:h-[80%] lg:p-20 shadow-xl text-black">
                     <h2 className='text-4xl'>Login to your account</h2>
                     {
                         error &&

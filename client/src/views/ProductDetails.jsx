@@ -3,10 +3,12 @@ import Nav from '../components/Nav';
 import { userContext } from '../context/userContext';
 import axios from 'axios';
 import { useParams, Link, useNavigate } from 'react-router-dom';
+import { cartContext } from '../context/cartContext';
 
 const ProductDetails = (props) => {
     const { id } = useParams();
     const { user, setUser } = useContext(userContext);
+    const {cartItems, setCartItems} = useContext(cartContext);
     const navigate = useNavigate();
     const [product, setProduct] = useState({
         imgUrl: '',
@@ -53,25 +55,36 @@ const ProductDetails = (props) => {
             })
 
     }
+    const addToCartHandler = (id) => {
+        setCartItems((prevValue) => ({
+            ...prevValue,
+            [id]: prevValue[id] + 1
+        }))
+    }
     return (
         <>
-            <div className='main'>
-                <div className="container justify-evenly p-5 mx-auto">
-                    <img className='w-[30%] md:w-1/3' src={product.imgUrl} alt={product.productName} />
+                <div className="container justify-evenly p-5 mx-auto text-black caret-transparent">
+                    <img className='w-[30%] md:w-1/3 bg-white rounded-3xl shadow-2xl ' src={product.imgUrl} alt={product.productName} />
                     <div className='h-full flex flex-col justify-evenly w-[30%] md:w-1/3'>
-                        <h3 className='text-2xl lg:text-5xl'>{product.productName}</h3>
+                        <h3 className='text-2xl lg:text-5xl mb-4'>{product.productName}</h3>
                         <p className='text-xl'>Price: ${product.productPrice}</p>
                         {
-                            user.isAdmin ?
-                                <div className='w-28 flex justify-between text-2xl w-[40%]'>
+                            window.localStorage.getItem('uuid') && user.isAdmin  ?
+                                <div className='w-28 flex justify-between text-2xl'>
                                     <Link to={`/product/${product._id}/edit`}><button className='button px-3 py-2'>edit</button></Link>
                                     <button className='button text-white bg-red-500 border-red-500 px-3 py-2' onClick={deleteHandler}>delete</button>
                                 </div> :
-                                <Link to={`/checkout/${product._id}`}><button>buy</button></Link>
+                                <button className='button border-amber-500 text-xl text-white bg-amber-500 px-4 hover:bg-white hover:text-amber-500 hover:border hover:border-amber-500'
+                                onClick={(e) => addToCartHandler(product._id)}>
+                                    Add To Cart 
+                                {
+                                    cartItems[product._id] > 0 &&
+                                    <span> ({cartItems[product._id]})</span>
+                                }
+                                </button>
                         }
                     </div>
                 </div>
-            </div>
         </>
     )
 }

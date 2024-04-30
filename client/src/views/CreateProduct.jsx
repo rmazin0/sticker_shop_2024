@@ -85,7 +85,7 @@ const CreateProduct = (props) => {
 
     return (
         <>
-                <div className="container flex-col mx-auto min-h-[50%] p-10 shadow-xl">
+                <div className="container text-black flex-col mx-auto min-h-[50%] p-10 shadow-xl">
                     {/* {
                         user.isAdmin ?
                             <h2>Hello Admin {user.username}</h2> :
@@ -149,7 +149,7 @@ const CreateProduct = (props) => {
                                 <p className='text-red-600'>{errors.publicId.message}</p>:null
                             }
                         </div>
-                        <input className="input rounded-full w-full mt-3" type="submit" value="submit" />
+                        <input className="px-2 py-1 rounded-full w-full mt-3 text-white text-xl bg-amber-500 hover:bg-white hover:text-amber-500 hover:border hover:border-amber-500" type="submit" value="Submit" />
                     </form>
                 </div>
         </>

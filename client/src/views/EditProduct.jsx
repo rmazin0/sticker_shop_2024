@@ -96,7 +96,7 @@ const EditProduct = (props) => {
 
     return (
         <> 
-                <div className="container flex-col mx-auto min-h-[50%] p-10 shadow-xl">
+                <div className="container flex-col mx-auto min-h-[50%] p-10 shadow-xl text-black">
                     <h2 className='text-4xl'>Edit Product</h2>
                     {
                         preview.imgUrl ?

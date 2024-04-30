@@ -16,9 +16,21 @@ function App() {
 
   return (
     <>
-
+      {/* 
+    todo tom - immediate - product context for cart
+      **************FRONT END DESIGN***************
+      1. Hero page
+      2. Footer component(added)
+      3. Product display(a bit better)
+      4. Device responsive(for phones)
+      4. Background???
+      -----------------BONUSES---------------------
+      1. checkout page( if di maimplement yung api, kahit view route lang) (added)
+      2. animations(dropdown, add counter to cart)
+      3. categories (maybe in form of tags)
+    */}
       <Nav />
-      <div className='main min-h-screen max-h-min font-custom'>
+      <div className='main min-h-screen max-h-min font-custom bg-neutral-950 text-white'>
         <Routes>
           <Route index element={<Hero />} />
           <Route path='/login' element={<Login />} />

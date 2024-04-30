@@ -32,18 +32,18 @@ const ProductsDisplay = (props) => {
     return (
         <>
             <h2 className='text-6xl text-center'>Products</h2>
-            <div className="grid sm:grid-cols-2 2xl:grid-cols-4 p-5 gap-4 mx-auto">
+            <div className="grid sm:grid-cols-2 2xl:grid-cols-4 p-5 gap-4 mx-auto text-black text-center">
                 {
                     products.map((product) => (
-                        <div key={product._id} className='bg-white shadow-xl rounded-xl flex flex-col justify-evenly items-center p-3'>
-                            <img style={{ width: '200px' }} loading='lazy' src={product.imgUrl} alt={product.productName} />
-                            <Link to={`/product/${product._id}/details`}><h3 className='text-3xl'>{product.productName}</h3></Link>
-                            <div >
+                        <div key={product._id} className='shadow-xl rounded-xl flex flex-col justify-evenly items-center p-3'>
+                            <Link to={`/product/${product._id}/details`}><img style={{ width: '200px' }} className='bg-white rounded-3xl shadow-2xl relative' loading='lazy' src={product.imgUrl} alt={product.productName} /></Link>
+                            <div className='bg-neutral-200 w-full rounded-lg pt-20 -mt-20 pb-5' >
+                                <Link to={`/product/${product._id}/details`}><h3 className='text-3xl hover:text-amber-500'>{product.productName}</h3></Link>
                                 <p className='text-xl'>Price: ${product.productPrice}</p>
                                 {
                                     window.localStorage.getItem('uuid') && user.isAdmin ?
                                         <p>{user.isAdmin}</p> :
-                                        <button className='button border-amber-500 text-xl text-white bg-amber-500 px-4'
+                                        <button className='button border-amber-500 text-xl text-white bg-amber-500 px-4 hover:bg-white hover:text-amber-500 hover:border hover:border-amber-500'
                                             onClick={(e) => addToCartHandler(product._id)}>
                                             Add To Cart
                                             {
@@ -56,7 +56,7 @@ const ProductsDisplay = (props) => {
                         </div>
                     ))
                 }
-            </div>
+            </div >
         </>
     )
 }

@@ -43,7 +43,7 @@ const Registration = (props) => {
 
     return (
         <>
-                <div className="container flex-col justify-evenly mx-auto h-3/4 lg:p-20 shadow-xl">
+                <div className="container flex-col justify-evenly mx-auto h-3/4 lg:p-20 shadow-xl text-black">
                     <h2 className='text-4xl' >Create an Account!</h2>
                     <form onSubmit={registerHandler} className="w-4/5 h-1/2 flex flex-col justify-evenly">
                         <div className="flex justify-start">

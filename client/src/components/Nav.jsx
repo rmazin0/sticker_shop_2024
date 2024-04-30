@@ -14,8 +14,6 @@ const Nav = (props) => {
     const { cartQuantity } = useContext(cartContext);
     const [navBurger, setNavBurger] = useState(false)
     const [navBtn, setNavBtn] = useState(false)
-    const activeLink = 'text-amber-500'
-    const normalLink = 'text-red-500'
 
     const logout = () => {
         axios.post('http://localhost:8000/api/logout', {}, { withCredentials: true })
@@ -38,7 +36,7 @@ const Nav = (props) => {
 
     return (
         <>
-            <header className='flex justify-between items-center p-5 bg-stone-800 text-white text-xl'>
+            <header className='flex justify-between items-center p-5 bg-black text-white text-xl'>
                 <div className='w-1/2'>
                     <Link to={'/'}>
                         <img className='w-20 h029 caret-transparent mx-10' src={logo} alt="Store Logo" />
