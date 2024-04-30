@@ -19,7 +19,7 @@ const ProductSchema = new Schema({
     },
     productStock: {
         type: Number,
-        required: [true, 'Stock number required.']
+        // required: [true, 'Stock number required.']
     }
 }, {timestamps: true})
 

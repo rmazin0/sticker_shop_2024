@@ -95,16 +95,15 @@ const EditProduct = (props) => {
     }
 
     return (
-        <>
-            <div className='main'> 
-                <div className="container flex-col p-5 mx-auto">
+        <> 
+                <div className="container flex-col mx-auto min-h-[50%] p-10 shadow-xl">
                     <h2 className='text-4xl'>Edit Product</h2>
                     {
                         preview.imgUrl ?
                             <img style={{ width: '200px' }} loading='lazy' src={preview.imgUrl} alt={product.productName} /> :
                             <img style={{ width: '200px' }} loading='lazy' src={product.imgUrl} alt={product.productName} />
                     }
-                    <form encType='multipart/form-data' onSubmit={submitHandler}>
+                    <form encType='multipart/form-data' className='h-[70%] flex flex-col justify-evenly' onSubmit={submitHandler}>
                         <div className="flex flex-col justify-start">
                             <label className='text-xl' htmlFor="productName">Product Name</label>
                             <input className="input"
@@ -131,7 +130,7 @@ const EditProduct = (props) => {
                                 <p className='text-red-600'>{errors.productPrice.message}</p>:null
                             }
                         </div>
-                        <div className="flex flex-col justify-start">
+                        {/* <div className="flex flex-col justify-start">
                             <label className='text-xl' htmlFor="productStock">Amount</label>
                             <input className="input"
                                 type="number"
@@ -143,7 +142,7 @@ const EditProduct = (props) => {
                                 errors.productStock?
                                 <p className='text-red-600'>{errors.productStock.message}</p>:null
                             }
-                        </div>
+                        </div> */}
                         <div className="flex flex-col justify-start">
                             <label className='text-xl' htmlFor="img">Product Image</label>
                             <input className="input"
@@ -152,10 +151,9 @@ const EditProduct = (props) => {
                                 onChange={(e) => changeHandler(e)}
                             />
                         </div>
-                        <input className="input rounded-full w-full mt-3" type="submit" value="update" />
+                        <input className="px-2 py-1 rounded-full w-full mt-3 text-white text-xl bg-amber-500 hover:bg-white hover:text-amber-500 hover:border hover:border-amber-500" type="submit" value="update" />
                     </form>
                 </div>
-            </div>
         </>
     )
 }

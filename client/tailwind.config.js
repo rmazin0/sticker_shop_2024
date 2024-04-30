@@ -7,7 +7,8 @@ export default {
   ],
   theme: {
     extend: {
-      colors: {
+      fontFamily: {
+        custom: ["Merriweather", 'serif'],
       }
     },
   },

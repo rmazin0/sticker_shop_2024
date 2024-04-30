@@ -43,10 +43,9 @@ const Registration = (props) => {
 
     return (
         <>
-            <div className="flex flex-col bg-stone-50 h-screen py-40">
-                <div className="container flex-col p-5 mx-auto">
+                <div className="container flex-col justify-evenly mx-auto h-3/4 lg:p-20 shadow-xl">
                     <h2 className='text-4xl' >Create an Account!</h2>
-                    <form onSubmit={registerHandler} className="w-4/5">
+                    <form onSubmit={registerHandler} className="w-4/5 h-1/2 flex flex-col justify-evenly">
                         <div className="flex justify-start">
                             <h2 className='text-xl'>Register as:</h2>
                             <div className="mx-5">
@@ -134,11 +133,10 @@ const Registration = (props) => {
                                 }
                             </div>
                         }
-                        <input className="input rounded-full w-full mt-3" type="submit" value={"Sign up"} />
+                        <input className="px-2 py-1 rounded-full w-full mt-3 text-white text-xl bg-amber-500 hover:bg-white hover:text-amber-500 hover:border hover:border-amber-500" type="submit" value={"Sign up"} />
                     </form>
-                    <p>Already have an account? <Link to={'/login'}><span className="text-blue-600 underline">Sign In</span></Link></p>
+                    <p className="mt-3">Already have an account? <Link to={'/login'}><span className="text-blue-600 underline">Sign In</span></Link></p>
                 </div>
-            </div>
         </>
     )
 }

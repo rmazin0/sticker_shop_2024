@@ -34,35 +34,33 @@ const Checkout = (props) => {
 
     return (
         <>
-            <div className="main">
-                <h1 className='text-5xl text-center'>Your Cart Items</h1>
-                <div>
-                    {
-                        products.map((product) => (
-                            <div key={product._id} className='rounded-xl bg-white grid grid-cols-3'>
-                                {
-                                    cartItems[product._id] > 0 &&
-                                    <div className='border border-stone-500 rounded flex flex-col justify-evenly items-center '>
-                                        <img style={{ width: '200px' }} loading='lazy' src={product.imgUrl} alt={product.productName} />
-                                        <Link to={`/product/${product._id}/details`}><h3 className='text-3xl'>{product.productName}</h3></Link>
-                                        <div className="flex justify-evenly items-baseline">
-                                            <button className='button border-amber-500 text-white bg-amber-500 px-2'
-                                                onClick={(e) => addToCartHandler(product._id)}>
-                                                +
-                                            </button>
-                                            <p className='text-xl'>Amount: {cartItems[product._id]}</p>
-                                            <button className='button border-amber-500 text-white bg-amber-500 px-2'
-                                                onClick={(e) => removeFromCartHandler(product._id)}>
-                                                -
-                                            </button>
-                                        </div>
-                                        <p className='text-xl'>Price: ${product.productPrice * cartItems[product._id]}</p>
+            <h1 className='text-6xl text-center'>Your Cart Items</h1>
+            <div className="grid sm:grid-cols-2 2xl:grid-cols-4 p-5 gap-4 mx-auto">
+                {
+                    products.map((product) => (
+                        <>
+                        {
+                            cartItems[product._id] > 0 &&
+                            <div key={product._id} className='bg-white shadow-xl rounded-xl flex flex-col justify-evenly items-center p-3'>
+                                    <img style={{ width: '200px' }} loading='lazy' src={product.imgUrl} alt={product.productName} />
+                                    <Link to={`/product/${product._id}/details`}><h3 className='text-3xl'>{product.productName}</h3></Link>
+                                    <div className="flex justify-evenly items-baseline">
+                                        <button className='button border-amber-500 text-white bg-amber-500 px-2'
+                                            onClick={(e) => addToCartHandler(product._id)}>
+                                            +
+                                        </button>
+                                        <p className='text-xl'>Amount: {cartItems[product._id]}</p>
+                                        <button className='button border-amber-500 text-white bg-amber-500 px-2'
+                                            onClick={(e) => removeFromCartHandler(product._id)}>
+                                            -
+                                        </button>
                                     </div>
-                                }
-                            </div>
-                        ))
-                    }
-                </div>
+                                    <p className='text-xl'>Price: ${product.productPrice * cartItems[product._id]}</p>
+                                    </div>
+                            }
+                            </>
+                    ))
+                }
             </div>
         </>
     )
